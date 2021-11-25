@@ -1,4 +1,4 @@
-
+//Passenger class
 public class Passenger {
 
 	private String name;

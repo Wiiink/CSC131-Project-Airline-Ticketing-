@@ -1,6 +1,4 @@
 
-
-
 public class Services {
 
 	public String meal_type;
