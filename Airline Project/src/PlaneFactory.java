@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 //This class is used to generate a set number of random flights for the program
+//**Factory design pattern**
 public class PlaneFactory {
 	
 	//flights to be created

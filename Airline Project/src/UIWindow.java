@@ -1,12 +1,11 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
 //Main GUI for booking process
-public class UIWindow extends JFrame implements ActionListener{
+public class UIWindow extends JFrame{
 	
 	private Container contentPane = getContentPane();
 	private static UIWindow window;
@@ -34,29 +33,28 @@ public class UIWindow extends JFrame implements ActionListener{
 		
 		contentPane.setLayout(new BorderLayout());
 		
-		//create seat and flight selection components (seatSelect listens to flightSelection)
-		SeatSelect seats = new SeatSelect(this);
+		//create and add components for JFrame
+		//(SeatSelect, FlightSelect, confirm button, TicketHandler) are observers to TicketTracker
+		//TicketTracker(subject) is an ActionListener to FlightSelect, SeatButton, and confirm button
+		TicketTracker selection = new TicketTracker();
+		TicketHandler feedback = new TicketHandler("");
+		selection.addObserver(feedback);
+		contentPane.add(feedback, BorderLayout.EAST);
+		
+		SeatSelect seats = new SeatSelect(selection);
+		selection.addObserver(seats);
 		contentPane.add(seats, BorderLayout.CENTER);
 		
 		FlightSelection flights = new FlightSelection();
 		contentPane.add(flights, BorderLayout.NORTH);
-		flights.addActionListener(seats);
+		flights.addActionListener(selection);
+		selection.addObserver(flights);
 		
 		contentPane.add(new JLabel("Select your seat"), BorderLayout.WEST);
 		
-	}
-	
-	//responds to selection of available Seats once picked
-	public void actionPerformed(ActionEvent e) {
-		SeatButton source = (SeatButton)e.getSource();
-		Seat selected = source.getSeat();
-		if(selected!=null) {//Seat exists
-			//occupy seat, and remove listener(avoid double booking)
-			selected.setOccupied(true);
-			System.out.println("Selection Confirmed"); //confirmation prompted on console insteaed of in frame
-			source.removeActionListener(this);
-			source.checkStatus();
-		}
+		JButton confirm = new JButton("Confirm selection");
+		confirm.addActionListener(selection);
+		contentPane.add(confirm, BorderLayout.SOUTH);
 	}
 	
 }

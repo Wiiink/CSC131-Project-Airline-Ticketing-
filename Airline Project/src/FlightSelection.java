@@ -1,25 +1,12 @@
 import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.util.HashSet;
 
 //dropbox object for flight selection
-//NOTE: when selecting items, item may have to be selected "twice" to update listener
-public class FlightSelection extends JComboBox<Airplane> {
-	
-	private ActionListener listener; //listener for when an Airplane is chosen
+//observer for ticketsubject class
+public class FlightSelection extends JComboBox<Airplane> implements TicketObserver{
 	
 	//list of available flights from masterList
 	private HashSet<Airplane> planes = Utilities.getFlightList();
-	
-	
-	public FlightSelection(ActionListener listener) {
-		super();
-		this.listener = listener;
-		setMaximumRowCount(10);
-		setUp();
-	}
-	
 	
 	public FlightSelection() {
 		super();
@@ -33,7 +20,7 @@ public class FlightSelection extends JComboBox<Airplane> {
 		for(Airplane a : planes) {
 			addItem(a);
 		}
-		setSelectedIndex(-1);
+		setSelectedItem(null);
 	}
 	
 	//updates flight list if necessary
@@ -42,5 +29,9 @@ public class FlightSelection extends JComboBox<Airplane> {
 		setUp();
 	}
 	
+	//updates selected flight from subject object
+	public void handleNotification(boolean[] state, TicketSubject t) {
+		if(state[0]) setSelectedItem(((TicketTracker)t).getPlane());
+	}
 	
 }

@@ -2,8 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-//Panel object for seat selection (intended to be listener for flightSelection)
-public class SeatSelect extends JPanel implements ActionListener{
+//Panel object for seat selection
+//Observer for TicketSubject
+public class SeatSelect extends JPanel implements TicketObserver{
 	
 	private ActionListener listener;//listener for when a seat is picked
 	
@@ -11,8 +12,8 @@ public class SeatSelect extends JPanel implements ActionListener{
 	private static final int rows = 6;
 	private static final int col = Utilities.FLIGHT_CAPACITY/6;
 	private static String[] buttonText = new String[col*rows];
-	
-	private Airplane plane = null;//Airplane chosen from previous step
+	//selected plane
+	private Airplane plane = null;
 	
 	public SeatSelect() {
 		super();
@@ -25,20 +26,6 @@ public class SeatSelect extends JPanel implements ActionListener{
 		this.listener = listener;
 		createText();
 		setUpLayout();
-	}
-	
-	//once a flight is chosen, updates seat selection
-	public void actionPerformed(final ActionEvent e) {
-		JComboBox<Airplane> source = ((JComboBox<Airplane>)(e.getSource()));
-		if (e.getActionCommand().isBlank()) plane = null;
-		else {
-			plane = ((Airplane)((JComboBox<Airplane>)(e.getSource())).getSelectedItem());
-		}
-		if(plane!=null) {
-			setUpLayout(plane.getSeats());
-		}
-		else setUpLayout();
-		
 	}
 	
 	//Generates text for seats
@@ -79,4 +66,14 @@ public class SeatSelect extends JPanel implements ActionListener{
 		}
 		
 	}
+	
+	//handles notifications from subject that indicate change of plane and seats to be displayed
+	public void handleNotification(boolean[] state, TicketSubject t) {
+		if(state[0] || state[1]) {
+			plane = ((TicketTracker)t).getPlane();
+			if(plane!=null) setUpLayout(plane.getSeats());
+			else setUpLayout();
+		}
+	}
+	
 }
