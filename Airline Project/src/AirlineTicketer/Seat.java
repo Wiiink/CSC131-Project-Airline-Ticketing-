@@ -1,3 +1,4 @@
+package AirlineTicketer;
 
 public class Seat {
 	

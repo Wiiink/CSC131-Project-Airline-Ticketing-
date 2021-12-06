@@ -1,3 +1,4 @@
+package AirlineTicketer;
 
 public class Airplane {
 	
@@ -49,17 +50,5 @@ public class Airplane {
 	public String toString() {
 		return "#"+ id + ", " + departure + " to " + destination;
 	}
-	
-	//returns a detailed representation Airplane (seats represented as a binary set)
-	public String toStringExtended() {
-		String s = "#"+ id + ", " + departure + " to " + destination + ", ";
-		for(int i=0; i<seats.length; i++) {
-			int temp;
-			if(seats[i].getOccupied()==true) temp = 1;
-			else temp = 0;
-			
-			s+=temp;
-		}
-		return s;
-	}
+
 }

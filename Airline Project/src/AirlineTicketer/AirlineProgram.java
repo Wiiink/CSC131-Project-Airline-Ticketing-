@@ -1,3 +1,4 @@
+package AirlineTicketer;
 //Main class that runs the Airline Ticket program
 public class AirlineProgram {
 	

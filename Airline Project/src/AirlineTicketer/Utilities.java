@@ -1,3 +1,4 @@
+package AirlineTicketer;
 import java.util.HashSet;
 
 //contains several resources to be used across classes as needed
