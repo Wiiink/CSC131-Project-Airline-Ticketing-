@@ -7,21 +7,21 @@ import java.util.Random;
 public class PlaneFactory {
 	
 	//flights to be created
-	private static final int FLIGHTS = 10;
+	public static final int TOTAL_FLIGHTS = 10;
 	private static Random rand = new Random();
 	
 	//list of unique ID's created for flights
 	private static HashSet<Integer> flightIDList = new HashSet<Integer>();
 	
-	public static void createFlights() { 
-		//does not create more Airplane objects if the masterList has already been created
-		if(!Utilities.isEmpty()) return;
+	public static HashSet<Airplane> createFlights() {
+		
+		HashSet<Airplane> list = new HashSet<Airplane>();
 		
 		String[] locations = Utilities.LOCATIONS; 
 		int capacity = Utilities.FLIGHT_CAPACITY;
 		
 		//create x amount of Airplanes
-		for(int i=0; i<FLIGHTS; i++) {
+		for(int i=0; i<TOTAL_FLIGHTS; i++) {
 			//generate random 6-digit id, check if unique
 			int id = rand.nextInt(900000)+100000; 
 			while(flightIDList.contains(id)) {
@@ -43,9 +43,12 @@ public class PlaneFactory {
 				occupiedSeats[j] = rand.nextBoolean();
 			}
 			//create Airplane and add it to the masterList
-			Utilities.addFlight(new Airplane(id, depart, dest, occupiedSeats));
+			//return list
+			//Utilities.addFlight(new Airplane(id, depart, dest, occupiedSeats));
+			list.add(new Airplane(id, depart, dest, occupiedSeats));
 			flightIDList.add(id);
 		}
+		return list;
 	}
 	
 }
