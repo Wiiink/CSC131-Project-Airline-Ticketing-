@@ -3,8 +3,6 @@ package AirlineTicketer;
 public class AirlineProgram {
 	
 	public static void main(String[] arg) {
-		//create flights for program
-		PlaneFactory.createFlights();
 		//setup JFrame
 		UIWindow window = UIWindow.windowCreator();
 		window.setTitle("Airline Demo V2");        
