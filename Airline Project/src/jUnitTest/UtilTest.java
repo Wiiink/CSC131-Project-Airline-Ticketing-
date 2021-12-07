@@ -12,12 +12,12 @@ public class UtilTest {
 
 	@Test
 	public void getFlightList() {
-		PlaneFactory factory = new PlaneFactory();
 		Utilities UTIL = new Utilities();
 		HashSet<Airplane> planes = new HashSet<Airplane>();
 		planes = UTIL.getFlightList();
-		
-		assertTrue(planes.size()==PlaneFactory.TOTAL_FLIGHTS);
+		//check all flights (10 out of 10) were successfuly created
+		assertEquals(planes.size(),PlaneFactory.TOTAL_FLIGHTS);
+		//check each Airplane object is initialized
 		for(Airplane plane : planes) {
 			assertNotNull(plane);
 		}
