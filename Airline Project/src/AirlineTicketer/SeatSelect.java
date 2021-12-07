@@ -14,13 +14,7 @@ public class SeatSelect extends JPanel implements TicketObserver{
 	private static final int col = Utilities.FLIGHT_CAPACITY/6;
 	private static String[] buttonText = new String[col*rows];
 	//selected plane
-	private Airplane plane = null;
-	
-	public SeatSelect() {
-		super();
-		createText();
-		setUpLayout();
-	}
+	private Airplane plane;
 	
 	public SeatSelect(ActionListener listener) {
 		super();
@@ -72,8 +66,7 @@ public class SeatSelect extends JPanel implements TicketObserver{
 	public void handleNotification(boolean[] state, TicketSubject t) {
 		if(state[0] || state[1]) {
 			plane = ((TicketTracker)t).getPlane();
-			if(plane!=null) setUpLayout(plane.getSeats());
-			else setUpLayout();
+			setUpLayout(plane.getSeats());
 		}
 	}
 	

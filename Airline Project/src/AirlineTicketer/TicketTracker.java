@@ -29,6 +29,10 @@ public class TicketTracker implements TicketSubject, ActionListener{
 		observers.remove(o);
 	}
 	
+	public ArrayList<TicketObserver> getObservers(){
+		return observers;
+	}
+	
 	//notifies all observer objects to current state and changes
 	public void notifyObservers() {
 		//observers recieve a copy of changes, so local version may be reset

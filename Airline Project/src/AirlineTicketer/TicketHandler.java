@@ -14,7 +14,7 @@ public class TicketHandler extends JLabel implements TicketObserver{
 	//handles state changes to subject
 	public void handleNotification(boolean[] state, TicketSubject subject) {
 		//confirmation button pressed, display confirmation & reset seat selection
-		if(state[2] && (subject instanceof TicketTracker)) {
+		if(state[2]) {
 			TicketTracker b = (TicketTracker)subject;
 			if(b.getSeat()!=null) {
 				b.getSeat().setOccupied(true);
